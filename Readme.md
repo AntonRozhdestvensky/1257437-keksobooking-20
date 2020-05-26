@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Антон Рождественский](https://up.htmlacademy.ru/javascript/20/user/1257437).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Мастеров](https://htmlacademy.ru/profile/id912463).
 
 ---
 
