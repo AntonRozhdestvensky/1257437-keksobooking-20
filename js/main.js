@@ -1,7 +1,6 @@
 'use strict';
 
 var ARRAY_ADS = 8;
-var AVATAR_TEMPLATE = 'img/avatars/user{{xx}}.png';
 var TITLE_ADS = [
              'Заголовок - 1',
              'Заголовок - 2',
@@ -38,3 +37,41 @@ var LOCATION_X_MIN = 0;
 var LOCATION_X_MAX = 1200;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
+
+var map = document.querySelector('.map');
+map.classList.remove('map--faded');
+
+// Получаем случайный элемент массива
+var getElementArray = function (array) {
+  return Math.floor(Math.random() * array.length);
+}
+
+// Получаем случайный аватар
+var getAvatar = function (id) {
+  return 'img/avatars/user0' + '0' + id + '.png';
+}
+
+var generateSimilarAds = function (id) {
+  var randomAds = {
+    author: {
+      avatar: getAvatar(id)
+  },
+    offer: {
+      title: getElementArray(TITLE_ADS),
+      address: ,
+      price: ,
+      type: ,
+      rooms: ,
+      guests: ,
+      checkin: ,
+      checkout: ,
+      features: ,
+      description: ,
+      photos:
+  },
+    location: {
+        x: ,
+        y: ,
+    }
+  }
+}
