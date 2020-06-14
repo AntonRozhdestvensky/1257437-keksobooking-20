@@ -17,8 +17,7 @@ var PRICE_MAX = 100000;
 var TYPE_REALTY = ['palace', 'flat', 'house', 'bungalo'];
 var ROOMS = [1, 2, 3, 4]; // 4 === любое число комнат
 var GUEST = [1, 2, 3, 4]; // 3 === любое количество гостей, 4 === не для гостей
-var CHECKIN = ['12:00', '13:00', '14:00'];
-var CHECKOUT = ['12:00', '13:00', '14:00'];
+var CHECKINOUT = ['12:00', '13:00', '14:00'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var DESCRIPTION_ADS = [
                    'Описание - 1',
