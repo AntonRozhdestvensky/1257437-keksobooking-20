@@ -1,7 +1,7 @@
 'use strict';
 
-var ADVERT = 8;
-var AVATARS = ['01', '02', '03', '04', '05', '06', '07', '08'];
+var ADVERT_COUNT = 8;
+// var AVATARS = ['01', '02', '03', '04', '05', '06', '07', '08'];
 var TITLES = [
   'Заголовок - 1',
   'Заголовок - 2',
@@ -34,8 +34,8 @@ var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
-var WIDTH_PIN = 62;
-var HEIGHT_PIN = 62;
+var RADIUS_PIN = 50 / 2;
+var HEIGHT_PIN = 70;
 var LOCATION_X_MIN = 0;
 var LOCATION_X_MAX = 1200;
 var LOCATION_Y_MIN = 130;
@@ -54,12 +54,12 @@ var getRandomInteger = function (min, max) {
 // Генерируем 8 объявлений о недвижимости
 var generateSimilarAdverts = function () {
   var adverts = [];
-  for (var i = 0; i < ADVERT; i++) {
+  for (var i = 1; i <= ADVERT_COUNT; i++) { {
     var locationX = getRandomInteger(LOCATION_X_MIN, LOCATION_X_MAX);
     var locationY = getRandomInteger(LOCATION_Y_MIN, LOCATION_Y_MAX);
     adverts[i] = {
       author: {
-        avatar: 'img/avatars/user' + getRandomElementArray(AVATARS) + '.png',
+        avatar: 'img/avatars/user0' + i + '.png',
       },
       offer: {
         title: getRandomElementArray(TITLES),
@@ -88,24 +88,24 @@ document.querySelector('.map').classList.remove('map--faded');
 
 // Учитываем размеры пина для определения координат
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-var createAdverts = function (adverts) {
+var renderPin = function (advert) { {
   var pin = pinTemplate.cloneNode(true);
-  pin.style.left = adverts.location.x - WIDTH_PIN / 2 + 'px';
+  pin.style.left = (adverts.location.x - RADIUS_PIN) + 'px';
   pin.style.top = adverts.location.y - HEIGHT_PIN + 'px';
 
-  var elementImage = pin.querySelector('img');
-  elementImage.src = adverts.author.avatar;
-  elementImage.alt = adverts.offer.title;
+  var avatar = pin.querySelector('img');
+  avatar.src = adverts.author.avatar;
+  avatar.alt = adverts.offer.title;
 
   return pin;
 };
 
 // Отрисовываем элементы в DOM
 var mapPinSelector = document.querySelector('.map__pins');
-var pins = generateSimilarAdverts();
+var adverts = generateSimilarAdverts();
 
-var renderAdverts = function () {
-  var fragmentAdverts = document.createDocumentFragment();
+var addPins = function (adverts) { {
+  var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < pins.length; i++) {
     fragmentAdverts.appendChild(createAdverts(pins[i]));
