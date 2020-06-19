@@ -54,7 +54,7 @@ var getRandomInteger = function (min, max) {
 // Генерируем 8 объявлений о недвижимости
 var generateSimilarAdverts = function () {
   var adverts = [];
-  for (var i = 1; i <= ADVERT_COUNT; i++) { {
+  for (var i = 1; i <= ADVERT_COUNT; i++) {
     var locationX = getRandomInteger(LOCATION_X_MIN, LOCATION_X_MAX);
     var locationY = getRandomInteger(LOCATION_Y_MIN, LOCATION_Y_MAX);
     adverts[i] = {
@@ -88,7 +88,7 @@ document.querySelector('.map').classList.remove('map--faded');
 
 // Учитываем размеры пина для определения координат
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-var renderPin = function (advert) { {
+var renderPin = function (advert)  {
   var pin = pinTemplate.cloneNode(true);
   pin.style.left = (adverts.location.x - RADIUS_PIN) + 'px';
   pin.style.top = adverts.location.y - HEIGHT_PIN + 'px';
@@ -104,7 +104,7 @@ var renderPin = function (advert) { {
 var mapPinSelector = document.querySelector('.map__pins');
 var adverts = generateSimilarAdverts();
 
-var addPins = function (adverts) { {
+var addPins = function (adverts) {
   var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < pins.length; i++) {
@@ -113,4 +113,4 @@ var addPins = function (adverts) { {
   mapPinSelector.appendChild(fragmentAdverts);
 };
 
-renderAdverts();
+addPins();
