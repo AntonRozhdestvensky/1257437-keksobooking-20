@@ -88,29 +88,29 @@ document.querySelector('.map').classList.remove('map--faded');
 
 // Учитываем размеры пина для определения координат
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-var renderPin = function (advert)  {
+var renderPin = function (advert) {
   var pin = pinTemplate.cloneNode(true);
-  pin.style.left = (adverts.location.x - RADIUS_PIN) + 'px';
-  pin.style.top = adverts.location.y - HEIGHT_PIN + 'px';
+  pin.style.left = (advert.location.x - RADIUS_PIN) + 'px';
+  pin.style.top = advert.location.y - HEIGHT_PIN + 'px';
 
   var avatar = pin.querySelector('img');
-  avatar.src = adverts.author.avatar;
-  avatar.alt = adverts.offer.title;
+  avatar.src = advert.author.avatar;
+  avatar.alt = advert.offer.title;
 
   return pin;
 };
 
 // Отрисовываем элементы в DOM
 var mapPinSelector = document.querySelector('.map__pins');
-var adverts = generateSimilarAdverts();
+var similarAdverts = generateSimilarAdverts();
 
 var addPins = function (adverts) {
   var fragment = document.createDocumentFragment();
 
-  for (var i = 0; i < pins.length; i++) {
-    fragmentAdverts.appendChild(createAdverts(pins[i]));
+  for (var i = 0; i < similarAdverts.length; i++) {
+    fragment.appendChild(renderPin(adverts[i]));
   }
-  mapPinSelector.appendChild(fragmentAdverts);
+  mapPinSelector.appendChild(fragment);
 };
 
 addPins();
