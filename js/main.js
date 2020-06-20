@@ -104,11 +104,11 @@ var renderPin = function (advert) {
 var mapPinSelector = document.querySelector('.map__pins');
 var similarAdverts = generateSimilarAdverts();
 
-var addPins = function (adverts) {
+var addPins = function (similarAdverts) {
   var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < similarAdverts.length; i++) {
-    fragment.appendChild(renderPin(adverts[i]));
+    fragment.appendChild(renderPin(similarAdverts[i]));
   }
   mapPinSelector.appendChild(fragment);
 };
