@@ -1,5 +1,13 @@
 'use strict';
 
+var map = document.querySelector('.map');
+
+var mapPin = document.querySelector('#pin').content.querySelector('.map__pin'); // поиск метки объявления
+var mapPinMain = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+var roomNumber = document.querySelector('#room_number');
+var capacity = document.querySelector('#capacity');
+
 var ADVERT_COUNT = 8;
 // var AVATARS = ['01', '02', '03', '04', '05', '06', '07', '08'];
 var TITLES = [
@@ -40,6 +48,8 @@ var LOCATION_X_MIN = 0;
 var LOCATION_X_MAX = 1200;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
+
+var ENTER_KEY = 'Enter';
 
 // Получаем случайный элемент массива
 var getRandomElementArray = function (array) {
@@ -83,8 +93,6 @@ var generateSimilarAdverts = function () {
   return adverts;
 };
 
-// Убираем класс .map--faded
-document.querySelector('.map').classList.remove('map--faded');
 
 // Учитываем размеры пина для определения координат
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -113,4 +121,10 @@ var addPins = function (similarAdverts) {
   mapPinSelector.appendChild(fragment);
 };
 
-addPins();
+var activatePage = function () {
+  addPins(similarAdverts);
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  adForm.querySelector('#fieldset').classList.remove('ad-form--disabled');
+  document.querySelector('.map__filters').classList.remove('map__filters--disabled');
+}
