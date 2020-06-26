@@ -1,15 +1,6 @@
 'use strict';
 
-var map = document.querySelector('.map');
-
-var mapPin = document.querySelector('#pin').content.querySelector('.map__pin'); // поиск метки объявления
-var mapPinMain = document.querySelector('.map__pin--main');
-var adForm = document.querySelector('.ad-form');
-var roomNumber = document.querySelector('#room_number');
-var capacity = document.querySelector('#capacity');
-
 var ADVERT_COUNT = 8;
-// var AVATARS = ['01', '02', '03', '04', '05', '06', '07', '08'];
 var TITLES = [
   'Заголовок - 1',
   'Заголовок - 2',
@@ -48,7 +39,6 @@ var LOCATION_X_MIN = 0;
 var LOCATION_X_MAX = 1200;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
-
 var ENTER_KEY = 'Enter';
 
 // Получаем случайный элемент массива
@@ -62,12 +52,14 @@ var getRandomInteger = function (min, max) {
 };
 
 // Генерируем 8 объявлений о недвижимости
-var generateSimilarAdverts = function () {
+var generateAdverts = function () {
   var adverts = [];
+
   for (var i = 1; i <= ADVERT_COUNT; i++) {
     var locationX = getRandomInteger(LOCATION_X_MIN, LOCATION_X_MAX);
     var locationY = getRandomInteger(LOCATION_Y_MIN, LOCATION_Y_MAX);
-    adverts[i] = {
+
+    adverts.push({
       author: {
         avatar: 'img/avatars/user0' + i + '.png',
       },
@@ -88,43 +80,63 @@ var generateSimilarAdverts = function () {
         x: locationX,
         y: locationY,
       }
-    };
+    });
   }
+
   return adverts;
 };
 
-
 // Учитываем размеры пина для определения координат
+var map = document.querySelector('.map');
+var pinContainer = map.querySelector('.map__pins');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+var mainPin = document.querySelector('.map__pin--main');
+
 var renderPin = function (advert) {
   var pin = pinTemplate.cloneNode(true);
+  var image = pin.querySelector('img');
+
   pin.style.left = (advert.location.x - RADIUS_PIN) + 'px';
   pin.style.top = advert.location.y - HEIGHT_PIN + 'px';
-
-  var avatar = pin.querySelector('img');
-  avatar.src = advert.author.avatar;
-  avatar.alt = advert.offer.title;
+  image.src = advert.author.avatar;
+  image.alt = advert.offer.title;
 
   return pin;
 };
 
-// Отрисовываем элементы в DOM
-var mapPinSelector = document.querySelector('.map__pins');
-var similarAdverts = generateSimilarAdverts();
-
-var addPins = function (similarAdverts) {
+var addPins = function (adverts) {
   var fragment = document.createDocumentFragment();
 
-  for (var i = 0; i < similarAdverts.length; i++) {
-    fragment.appendChild(renderPin(similarAdverts[i]));
+  for (var i = 0; i < adverts.length; i++) {
+    fragment.appendChild(renderPin(adverts[i]));
   }
-  mapPinSelector.appendChild(fragment);
+
+  pinContainer.appendChild(fragment);
+};
+
+var adverts = generateAdverts();
+
+var isEnterKey = function (evt) {
+  return evt.key === ENTER_KEY;
 };
 
 var activatePage = function () {
-  addPins(similarAdverts);
+  addPins(adverts);
   map.classList.remove('map--faded');
-  adForm.classList.remove('ad-form--disabled');
-  adForm.querySelector('#fieldset').classList.remove('ad-form--disabled');
-  document.querySelector('.map__filters').classList.remove('map__filters--disabled');
-}
+
+  mainPin.removeEventListener('mousedown', onMainPinMousedown);
+  mainPin.removeEventListener('keydown', onMainPinKeydown);
+};
+
+var onMainPinMousedown = function () {
+  activatePage();
+};
+
+var onMainPinKeydown = function (evt) {
+  if (isEnterKey(evt)) {
+    activatePage();
+  }
+};
+
+mainPin.addEventListener('mousedown', onMainPinMousedown);
+mainPin.addEventListener('keydown', onMainPinKeydown);
