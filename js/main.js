@@ -40,6 +40,11 @@ var LOCATION_X_MAX = 1200;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
 var ENTER_KEY = 'Enter';
+var ERROR_TEXT = {
+  GUESTS: 'Количество гостей должно быть меньше или равно количеству комнат.',
+  NO_GUESTS: 'Такое большое помещение не для гостей.',
+  NO_VALUE_GUESTS: 'Не выбрано количество гостей',
+};
 
 // Получаем случайный элемент массива
 var getRandomElementArray = function (array) {
@@ -86,14 +91,19 @@ var generateAdverts = function () {
   return adverts;
 };
 
-// Учитываем размеры пина для определения координат
+// получение DOM элементов
 var map = document.querySelector('.map');
+var mapPinMain = map.querySelector('.map__pin--main');
 var pinContainer = map.querySelector('.map__pins');
-var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-var mainPin = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+var fieldsetsAdForm = adForm.querySelectorAll('fieldset');
+var mapFilters = document.querySelector('.map__filters'); // Фильтр объявлений
+var roomsNumber = adForm.querySelector('#room_number');
+var capacity = adForm.querySelector('#capacity');
+var adFormSubmit = document.querySelector('.ad-form__submit');
 
 var renderPin = function (advert) {
-  var pin = pinTemplate.cloneNode(true);
+  var pin = mapPinMain.cloneNode(true);
   var image = pin.querySelector('img');
 
   pin.style.left = (advert.location.x - RADIUS_PIN) + 'px';
@@ -106,30 +116,49 @@ var renderPin = function (advert) {
 
 var addPins = function (adverts) {
   var fragment = document.createDocumentFragment();
-
   for (var i = 0; i < adverts.length; i++) {
     fragment.appendChild(renderPin(adverts[i]));
   }
-
   pinContainer.appendChild(fragment);
 };
 
 var adverts = generateAdverts();
 
-var isEnterKey = function (evt) {
-  return evt.key === ENTER_KEY;
+// Module 4 Task 2
+// Функция блокировки формы
+var disableFieldsets = function (elem) {
+  for (var i = 0; i < elem.length; i++) {
+    elem[i].setAttribute('disabled', 'disabled');
+  }
 };
 
+disableFieldsets(fieldsetsAdForm);
+
+// Функция включения формы
+var enableFieldsets = function (elem) {
+  for (var i = 0; i < elem.length; i++) {
+    elem[i].removeAttribute('disabled', 'disabled');
+  }
+};
+
+// Набор функций-декораторов для активации страницы
 var activatePage = function () {
   addPins(adverts);
   map.classList.remove('map--faded');
-
-  mainPin.removeEventListener('mousedown', onMainPinMousedown);
-  mainPin.removeEventListener('keydown', onMainPinKeydown);
+  adForm.classList.remove('ad-form--disabled');
+  mapFilters.classList.remove('map__filters--disabled');
+  enableFieldsets(fieldsetsAdForm);
+  enableFieldsets(mapFilters.children);
+  mapPinMain.removeEventListener('mousedown', onMainPinMousedown);
+  mapPinMain.removeEventListener('keydown', onMainPinKeydown);
 };
 
 var onMainPinMousedown = function () {
   activatePage();
+};
+
+var isEnterKey = function (evt) {
+  return evt.key === ENTER_KEY;
 };
 
 var onMainPinKeydown = function (evt) {
@@ -138,5 +167,23 @@ var onMainPinKeydown = function (evt) {
   }
 };
 
-mainPin.addEventListener('mousedown', onMainPinMousedown);
-mainPin.addEventListener('keydown', onMainPinKeydown);
+// Слушатели для активации страницы
+mapPinMain.addEventListener('mousedown', onMainPinMousedown);
+mapPinMain.addEventListener('keydown', onMainPinKeydown);
+
+
+// Валидация формы по mousedown
+adFormSubmit.addEventListener('change', function () {
+  var roomsValue = roomsNumber.value;
+  var capacityValue = capacity.value;
+
+  if (roomsValue === '100' && capacityValue !== '0') {
+    capacityValue.setCustomValidity(ERROR_TEXT.NO_GUESTS);
+  } else if (capacityValue === '0' && roomsValue !== '100') {
+    capacityValue.setCustomValidity(ERROR_TEXT.NO_VALUE_GUESTS);
+  } else if (roomsValue < capacityValue) {
+    capacityValue.setCustomValidity(ERROR_TEXT.GUESTS);
+  } else {
+    capacityValue.setCustomValidity('');
+  }
+});
