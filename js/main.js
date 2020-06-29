@@ -40,7 +40,8 @@ var LOCATION_X_MAX = 1200;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
 var ENTER_KEY = 'Enter';
-var ERROR_TEXT = {
+var MOUSE_KEY = 0;
+var ErrorText = {
   GUESTS: 'Количество гостей должно быть меньше или равно количеству комнат.',
   NO_GUESTS: 'Такое большое помещение не для гостей.',
   NO_VALUE_GUESTS: 'Не выбрано количество гостей',
@@ -94,6 +95,7 @@ var generateAdverts = function () {
 // получение DOM элементов
 var map = document.querySelector('.map');
 var mapPinMain = map.querySelector('.map__pin--main');
+var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinContainer = map.querySelector('.map__pins');
 var adForm = document.querySelector('.ad-form');
 var fieldsetsAdForm = adForm.querySelectorAll('fieldset');
@@ -103,7 +105,7 @@ var capacity = adForm.querySelector('#capacity');
 var adFormSubmit = document.querySelector('.ad-form__submit');
 
 var renderPin = function (advert) {
-  var pin = mapPinMain.cloneNode(true);
+  var pin = pinTemplate.cloneNode(true);
   var image = pin.querySelector('img');
 
   pin.style.left = (advert.location.x - RADIUS_PIN) + 'px';
@@ -126,18 +128,18 @@ var adverts = generateAdverts();
 
 // Module 4 Task 2
 // Функция блокировки формы
-var disableFieldsets = function (elem) {
-  for (var i = 0; i < elem.length; i++) {
-    elem[i].setAttribute('disabled', 'disabled');
+var disableFieldsets = function (element) {
+  for (var i = 0; i < element.length; i++) {
+    element[i].setAttribute('disabled', 'disabled');
   }
 };
 
 disableFieldsets(fieldsetsAdForm);
 
 // Функция включения формы
-var enableFieldsets = function (elem) {
-  for (var i = 0; i < elem.length; i++) {
-    elem[i].removeAttribute('disabled', 'disabled');
+var enableFieldsets = function (element) {
+  for (var i = 0; i < element.length; i++) {
+    element[i].removeAttribute('disabled', 'disabled');
   }
 };
 
@@ -153,12 +155,12 @@ var activatePage = function () {
   mapPinMain.removeEventListener('keydown', onMainPinKeydown);
 };
 
-var onMainPinMousedown = function () {
-  activatePage();
-};
-
 var isEnterKey = function (evt) {
   return evt.key === ENTER_KEY;
+};
+
+var isMouseButton = function (evt) {
+  return evt.button === MOUSE_KEY;
 };
 
 var onMainPinKeydown = function (evt) {
@@ -167,23 +169,25 @@ var onMainPinKeydown = function (evt) {
   }
 };
 
+var onMainPinMousedown = function (evt) {
+  if (isMouseButton(evt)) {
+    activatePage();
+  }
+};
+
 // Слушатели для активации страницы
 mapPinMain.addEventListener('mousedown', onMainPinMousedown);
 mapPinMain.addEventListener('keydown', onMainPinKeydown);
-
-
-// Валидация формы по mousedown
-adFormSubmit.addEventListener('change', function () {
+adFormSubmit.addEventListener('click', function () {
   var roomsValue = roomsNumber.value;
   var capacityValue = capacity.value;
-
   if (roomsValue === '100' && capacityValue !== '0') {
-    capacityValue.setCustomValidity(ERROR_TEXT.NO_GUESTS);
+    capacity.setCustomValidity(ErrorText.NO_GUESTS);
   } else if (capacityValue === '0' && roomsValue !== '100') {
-    capacityValue.setCustomValidity(ERROR_TEXT.NO_VALUE_GUESTS);
+    capacity.setCustomValidity(ErrorText.NO_VALUE_GUESTS);
   } else if (roomsValue < capacityValue) {
-    capacityValue.setCustomValidity(ERROR_TEXT.GUESTS);
+    capacity.setCustomValidity(ErrorText.GUESTS);
   } else {
-    capacityValue.setCustomValidity('');
+    capacity.setCustomValidity('');
   }
 });
