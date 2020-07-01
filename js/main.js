@@ -98,8 +98,10 @@ var mapPinMain = map.querySelector('.map__pin--main');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinContainer = map.querySelector('.map__pins');
 var adForm = document.querySelector('.ad-form');
+var addressInput = adForm.querySelector('input[name=address]');
 var fieldsetsAdForm = adForm.querySelectorAll('fieldset');
 var mapFilters = document.querySelector('.map__filters'); // Фильтр объявлений
+var mapFormSelectElement = mapFilters.querySelectorAll('select');
 var roomsNumber = adForm.querySelector('#room_number');
 var capacity = adForm.querySelector('#capacity');
 var adFormSubmit = document.querySelector('.ad-form__submit');
@@ -127,20 +129,27 @@ var addPins = function (adverts) {
 var adverts = generateAdverts();
 
 // Module 4 Task 2
-// Функция блокировки формы
-var disableFieldsets = function (element) {
-  for (var i = 0; i < element.length; i++) {
-    element[i].setAttribute('disabled', 'disabled');
-  }
+// Функция блокировки/разблокировки формы
+var isDisableElements = function (elements, state) {
+  elements.forEach(function (element) {
+    element.disabled = state;
+  });
 };
 
-disableFieldsets(fieldsetsAdForm);
+// Блокируем страницу по умолчанию
+isDisableElements(fieldsetsAdForm, true);
+isDisableElements(mapFormSelectElement, true);
 
-// Функция включения формы
-var enableFieldsets = function (element) {
-  for (var i = 0; i < element.length; i++) {
-    element[i].removeAttribute('disabled', 'disabled');
-  }
+
+// Не понимаю логику определения метки, но вроде правильно
+var addressPassive = function () {
+  addressInput.value = mapPinMain.offsetTop + ', ' + mapPinMain.offsetLeft;
+};
+
+addressPassive();
+
+var addressActive = function () {
+  addressInput.value = (mapPinMain.offsetTop - HEIGHT_PIN) + ', ' + (mapPinMain.offsetLeft - RADIUS_PIN);
 };
 
 // Набор функций-декораторов для активации страницы
@@ -149,18 +158,15 @@ var activatePage = function () {
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
   mapFilters.classList.remove('map__filters--disabled');
-  enableFieldsets(fieldsetsAdForm);
-  enableFieldsets(mapFilters.children);
+  isDisableElements(fieldsetsAdForm, false);
+  isDisableElements(mapFormSelectElement, false);
+  addressActive();
   mapPinMain.removeEventListener('mousedown', onMainPinMousedown);
   mapPinMain.removeEventListener('keydown', onMainPinKeydown);
 };
 
 var isEnterKey = function (evt) {
   return evt.key === ENTER_KEY;
-};
-
-var isMouseButton = function (evt) {
-  return evt.button === MOUSE_KEY;
 };
 
 var onMainPinKeydown = function (evt) {
@@ -170,7 +176,7 @@ var onMainPinKeydown = function (evt) {
 };
 
 var onMainPinMousedown = function (evt) {
-  if (isMouseButton(evt)) {
+  if (evt.button === MOUSE_KEY) {
     activatePage();
   }
 };
