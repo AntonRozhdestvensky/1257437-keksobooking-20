@@ -143,13 +143,13 @@ isDisableElements(mapFormSelectElement, true);
 
 // Не понимаю логику определения метки, но вроде правильно
 var addressPassive = function () {
-  addressInput.value = mapPinMain.offsetTop + ', ' + mapPinMain.offsetLeft;
+  addressInput.value = mapPinMain.offsetLeft + ', ' + mapPinMain.offsetTop;
 };
 
 addressPassive();
 
 var addressActive = function () {
-  addressInput.value = (mapPinMain.offsetTop - HEIGHT_PIN) + ', ' + (mapPinMain.offsetLeft - RADIUS_PIN);
+  addressInput.value = (mapPinMain.offsetLeft - RADIUS_PIN) + ', ' + (mapPinMain.offsetTop - HEIGHT_PIN);
 };
 
 // Набор функций-декораторов для активации страницы
