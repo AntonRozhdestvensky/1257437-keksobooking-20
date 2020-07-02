@@ -94,14 +94,15 @@ var generateAdverts = function () {
 
 // получение DOM элементов
 var map = document.querySelector('.map');
-var mapPinMain = map.querySelector('.map__pin--main');
+var mainPin = map.querySelector('.map__pin--main');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinContainer = map.querySelector('.map__pins');
 var adForm = document.querySelector('.ad-form');
 var addressInput = adForm.querySelector('input[name=address]');
 var fieldsetsAdForm = adForm.querySelectorAll('fieldset');
 var mapFilters = document.querySelector('.map__filters'); // Фильтр объявлений
-var mapFormSelectElement = mapFilters.querySelectorAll('select');
+var mapFormSelectOptions = mapFilters.querySelectorAll('select');
+var mapFeatures = mapFilters.querySelectorAll('input');
 var roomsNumber = adForm.querySelector('#room_number');
 var capacity = adForm.querySelector('#capacity');
 var adFormSubmit = document.querySelector('.ad-form__submit');
@@ -109,9 +110,8 @@ var adFormSubmit = document.querySelector('.ad-form__submit');
 var renderPin = function (advert) {
   var pin = pinTemplate.cloneNode(true);
   var image = pin.querySelector('img');
-
   pin.style.left = (advert.location.x - RADIUS_PIN) + 'px';
-  pin.style.top = advert.location.y - HEIGHT_PIN + 'px';
+  pin.style.top = (advert.location.y - HEIGHT_PIN) + 'px';
   image.src = advert.author.avatar;
   image.alt = advert.offer.title;
 
@@ -130,26 +130,27 @@ var adverts = generateAdverts();
 
 // Module 4 Task 2
 // Функция блокировки/разблокировки формы
-var isDisableElements = function (elements, state) {
+var doDisableElements = function (elements, state) {
   elements.forEach(function (element) {
     element.disabled = state;
   });
 };
 
 // Блокируем страницу по умолчанию
-isDisableElements(fieldsetsAdForm, true);
-isDisableElements(mapFormSelectElement, true);
+doDisableElements(fieldsetsAdForm, true);
+doDisableElements(mapFormSelectOptions, true);
+doDisableElements(mapFeatures, true);
 
 
 // Не понимаю логику определения метки, но вроде правильно
-var addressPassive = function () {
-  addressInput.value = mapPinMain.offsetLeft + ', ' + mapPinMain.offsetTop;
+var getAddressPassive = function () {
+  addressInput.value = mainPin.offsetLeft + ', ' + mainPin.offsetTop;
 };
 
-addressPassive();
+getAddressPassive();
 
-var addressActive = function () {
-  addressInput.value = (mapPinMain.offsetLeft - RADIUS_PIN) + ', ' + (mapPinMain.offsetTop - HEIGHT_PIN);
+var getAddressActive = function () {
+  addressInput.value = (mainPin.offsetLeft - RADIUS_PIN) + ', ' + (mainPin.offsetTop - HEIGHT_PIN);
 };
 
 // Набор функций-декораторов для активации страницы
@@ -158,11 +159,12 @@ var activatePage = function () {
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
   mapFilters.classList.remove('map__filters--disabled');
-  isDisableElements(fieldsetsAdForm, false);
-  isDisableElements(mapFormSelectElement, false);
-  addressActive();
-  mapPinMain.removeEventListener('mousedown', onMainPinMousedown);
-  mapPinMain.removeEventListener('keydown', onMainPinKeydown);
+  doDisableElements(fieldsetsAdForm, false);
+  doDisableElements(mapFormSelectOptions, false);
+  doDisableElements(mapFeatures, false);
+  getAddressActive();
+  mainPin.removeEventListener('mousedown', onMainPinMousedown);
+  mainPin.removeEventListener('keydown', onMainPinKeydown);
 };
 
 var isEnterKey = function (evt) {
@@ -182,14 +184,14 @@ var onMainPinMousedown = function (evt) {
 };
 
 // Слушатели для активации страницы
-mapPinMain.addEventListener('mousedown', onMainPinMousedown);
-mapPinMain.addEventListener('keydown', onMainPinKeydown);
+mainPin.addEventListener('mousedown', onMainPinMousedown);
+mainPin.addEventListener('keydown', onMainPinKeydown);
 adFormSubmit.addEventListener('click', function () {
-  var roomsValue = roomsNumber.value;
-  var capacityValue = capacity.value;
-  if (roomsValue === '100' && capacityValue !== '0') {
+  var roomsValue = Number(roomsNumber.value);
+  var capacityValue = Number(capacity.value);
+  if (roomsValue === 100 && capacityValue !== 0) {
     capacity.setCustomValidity(ErrorText.NO_GUESTS);
-  } else if (capacityValue === '0' && roomsValue !== '100') {
+  } else if (capacityValue === 0 && roomsValue !== 100) {
     capacity.setCustomValidity(ErrorText.NO_VALUE_GUESTS);
   } else if (roomsValue < capacityValue) {
     capacity.setCustomValidity(ErrorText.GUESTS);
