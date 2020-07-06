@@ -35,6 +35,9 @@ var PHOTOS = [
 ];
 var RADIUS_PIN = 50 / 2;
 var HEIGHT_PIN = 70;
+var MAIN_WIDTH_PIN = 65;
+var MAIN_HEIGHT_PIN = 65;
+var MAIN_HEIGHT_PIN_TAIL = 16;
 var LOCATION_X_MIN = 0;
 var LOCATION_X_MAX = 1200;
 var LOCATION_Y_MIN = 130;
@@ -120,9 +123,9 @@ var renderPin = function (advert) {
 
 var addPins = function (adverts) {
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < adverts.length; i++) {
-    fragment.appendChild(renderPin(adverts[i]));
-  }
+  adverts.forEach(function (advert) {
+    fragment.appendChild(renderPin(advert));
+  });
   pinContainer.appendChild(fragment);
 };
 
@@ -141,8 +144,6 @@ doDisableElements(fieldsetsAdForm, true);
 doDisableElements(mapFormSelectOptions, true);
 doDisableElements(mapFeatures, true);
 
-
-// Не понимаю логику определения метки, но вроде правильно
 var getAddressPassive = function () {
   addressInput.value = mainPin.offsetLeft + ', ' + mainPin.offsetTop;
 };
@@ -150,7 +151,9 @@ var getAddressPassive = function () {
 getAddressPassive();
 
 var getAddressActive = function () {
-  addressInput.value = (mainPin.offsetLeft - RADIUS_PIN) + ', ' + (mainPin.offsetTop - HEIGHT_PIN);
+  addressInput.readOnly = true;
+  addressInput.value = (mainPin.offsetLeft + Math.floor(MAIN_WIDTH_PIN / 2))
+  + ', ' + (mainPin.offsetTop + MAIN_HEIGHT_PIN + MAIN_HEIGHT_PIN_TAIL);
 };
 
 // Набор функций-декораторов для активации страницы
