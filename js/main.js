@@ -1,64 +1,5 @@
 'use strict';
 
-var ADVERT_COUNT = 8;
-var TITLES = [
-  'Заголовок - 1',
-  'Заголовок - 2',
-  'Заголовок - 3',
-  'Заголовок - 4',
-  'Заголовок - 5',
-  'Заголовок - 6',
-  'Заголовок - 7',
-  'Заголовок - 8'
-]; // Временно. Возможно будет изменен.
-var PRICE_MIN = 300;
-var PRICE_MAX = 100000;
-var TYPES = ['palace', 'flat', 'house', 'bungalo'];
-var ROOMS = [1, 2, 3, 4]; // 4 === любое число комнат
-var GUESTS = [1, 2, 3, 4]; // 3 === любое количество гостей, 4 === не для гостей
-var CHECK_TIMES = ['12:00', '13:00', '14:00'];
-var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var DESCRIPTIONS = [
-  'Описание - 1',
-  'Описание - 2',
-  'Описание - 3',
-  'Описание - 4',
-  'Описание - 5',
-  'Описание - 6',
-  'Описание - 7',
-  'Описание - 8',
-]; // Временно. Возможно будет изменено.
-var PHOTOS = [
-  'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
-  'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-  'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
-];
-var RADIUS_PIN = 50 / 2;
-var HEIGHT_PIN = 70;
-var MAIN_WIDTH_PIN = 65;
-var MAIN_HEIGHT_PIN = 65;
-var MAIN_HEIGHT_PIN_TAIL = 16;
-var LOCATION_X_MIN = 0;
-var LOCATION_X_MAX = 1200;
-var LOCATION_Y_MIN = 130;
-var LOCATION_Y_MAX = 630;
-var ENTER_KEY = 'Enter';
-var MOUSE_KEY = 0;
-var ErrorText = {
-  GUESTS: 'Количество гостей должно быть меньше или равно количеству комнат.',
-  NO_GUESTS: 'Такое большое помещение не для гостей.',
-  NO_VALUE_GUESTS: 'Не выбрано количество гостей',
-};
-
-// Получаем случайный элемент массива
-var getRandomElementArray = function (array) {
-  return Math.floor(Math.random() * array.length);
-};
-
-// Получаем случайное число
-var getRandomInteger = function (min, max) {
-  return Math.round(min - 0.5 + Math.random() * (max - min + 1));
-};
 
 // Генерируем 8 объявлений о недвижимости
 var generateAdverts = function () {
@@ -98,7 +39,7 @@ var generateAdverts = function () {
 // получение DOM элементов
 var map = document.querySelector('.map');
 var mainPin = map.querySelector('.map__pin--main');
-var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+
 var pinContainer = map.querySelector('.map__pins');
 var adForm = document.querySelector('.ad-form');
 var addressInput = adForm.querySelector('input[name=address]');
@@ -132,73 +73,5 @@ var addPins = function (adverts) {
 var adverts = generateAdverts();
 
 // Module 4 Task 2
-// Функция блокировки/разблокировки формы
-var doDisableElements = function (elements, state) {
-  elements.forEach(function (element) {
-    element.disabled = state;
-  });
-};
 
-// Блокируем страницу по умолчанию
-doDisableElements(fieldsetsAdForm, true);
-doDisableElements(mapFormSelectOptions, true);
-doDisableElements(mapFeatures, true);
 
-var getAddressPassive = function () {
-  addressInput.value = mainPin.offsetLeft + ', ' + mainPin.offsetTop;
-};
-
-getAddressPassive();
-
-var getAddressActive = function () {
-  addressInput.readOnly = true;
-  addressInput.value = (mainPin.offsetLeft + Math.floor(MAIN_WIDTH_PIN / 2))
-  + ', ' + (mainPin.offsetTop + MAIN_HEIGHT_PIN + MAIN_HEIGHT_PIN_TAIL);
-};
-
-// Набор функций-декораторов для активации страницы
-var activatePage = function () {
-  addPins(adverts);
-  map.classList.remove('map--faded');
-  adForm.classList.remove('ad-form--disabled');
-  mapFilters.classList.remove('map__filters--disabled');
-  doDisableElements(fieldsetsAdForm, false);
-  doDisableElements(mapFormSelectOptions, false);
-  doDisableElements(mapFeatures, false);
-  getAddressActive();
-  mainPin.removeEventListener('mousedown', onMainPinMousedown);
-  mainPin.removeEventListener('keydown', onMainPinKeydown);
-};
-
-var isEnterKey = function (evt) {
-  return evt.key === ENTER_KEY;
-};
-
-var onMainPinKeydown = function (evt) {
-  if (isEnterKey(evt)) {
-    activatePage();
-  }
-};
-
-var onMainPinMousedown = function (evt) {
-  if (evt.button === MOUSE_KEY) {
-    activatePage();
-  }
-};
-
-// Слушатели для активации страницы
-mainPin.addEventListener('mousedown', onMainPinMousedown);
-mainPin.addEventListener('keydown', onMainPinKeydown);
-adFormSubmit.addEventListener('click', function () {
-  var roomsValue = Number(roomsNumber.value);
-  var capacityValue = Number(capacity.value);
-  if (roomsValue === 100 && capacityValue !== 0) {
-    capacity.setCustomValidity(ErrorText.NO_GUESTS);
-  } else if (capacityValue === 0 && roomsValue !== 100) {
-    capacity.setCustomValidity(ErrorText.NO_VALUE_GUESTS);
-  } else if (roomsValue < capacityValue) {
-    capacity.setCustomValidity(ErrorText.GUESTS);
-  } else {
-    capacity.setCustomValidity('');
-  }
-});
