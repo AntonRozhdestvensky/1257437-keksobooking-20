@@ -32,6 +32,5 @@
     mapFilters: mapFilters,
     mapFormSelectOptions: mapFormSelectOptions,
     mapFeatures: mapFeatures,
-  }
-
+  };
 })();
