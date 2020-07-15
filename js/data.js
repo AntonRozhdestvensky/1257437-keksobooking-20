@@ -39,6 +39,14 @@
     var LOCATION_Y_MIN = 130;
     var LOCATION_Y_MAX = 630;
 
+    var getRandomElementArray = function (array) {
+      return Math.floor(Math.random() * array.length);
+    };
+
+    var getRandomInteger = function (min, max) {
+      return Math.round(min - 0.5 + Math.random() * (max - min + 1));
+    };
+
     // Генерируем 8 объявлений о недвижимости
     var generateAdverts = function () {
       var adverts = [];
@@ -75,6 +83,6 @@
     };
 
     window.data ={
-      'generateAdverts': generateAdverts
+      generateAdverts: generateAdverts
     };
 })();
