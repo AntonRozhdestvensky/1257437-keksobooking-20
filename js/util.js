@@ -7,19 +7,25 @@
     NO_VALUE_GUESTS: 'Не выбрано количество гостей',
   };
 
-  var MainPinSize = {
-    HEIGHT: 80,
-    RADIUS: Math.floor(65 / 2),
+  var toggleFieldsetState = function (elements, state) {
+    elements.forEach(function (element) {
+      element.disabled = state;
+    });
   };
 
-  var EventKeyCode = {
-    ENTER_KEY: 'Enter',
-    MOUSE_KEY: 0,
+  var isEnterKey = function (evt) {
+    return evt.key === EventKeyCode.ENTER_KEY;
+  };
+
+  var isMainMouseButton = function (evt) {
+    return evt.button === MOUSE_KEY;
   };
 
   window.util = {
     ErrorText: ErrorText,
-    MainPinSize: MainPinSize,
     EventKeyCode: EventKeyCode,
+    toggleFieldsetState: toggleFieldsetState,
+    isEnterKey: isEnterKey,
+    isMainMouseButton: isMainMouseButton,
   };
 })();

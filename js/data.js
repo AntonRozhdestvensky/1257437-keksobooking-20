@@ -34,10 +34,6 @@
     'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
     'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
   ];
-  var LOCATION_X_MIN = 0;
-  var LOCATION_X_MAX = 1200;
-  var LOCATION_Y_MIN = 130;
-  var LOCATION_Y_MAX = 630;
 
   var getRandomElementArray = function (array) {
     return Math.floor(Math.random() * array.length);
@@ -52,7 +48,7 @@
     var adverts = [];
 
     for (var i = 1; i <= ADVERT_COUNT; i++) {
-      var locationX = getRandomInteger(LOCATION_X_MIN, LOCATION_X_MAX);
+      var locationX = getRandomInteger(MapRect, LOCATION_X_MAX);
       var locationY = getRandomInteger(LOCATION_Y_MIN, LOCATION_Y_MAX);
 
       adverts.push({
@@ -81,7 +77,9 @@
     return adverts;
   };
 
+  var adverts = generateAdverts();
+
   window.data = {
-    generateAdverts: generateAdverts
+    adverts: adverts,
   };
 })();
