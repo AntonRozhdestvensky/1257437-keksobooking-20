@@ -48,8 +48,8 @@
     var adverts = [];
 
     for (var i = 1; i <= ADVERT_COUNT; i++) {
-      var locationX = getRandomInteger(MapRect, LOCATION_X_MAX);
-      var locationY = getRandomInteger(LOCATION_Y_MIN, LOCATION_Y_MAX);
+      var locationX = getRandomInteger(window.constant.MapRect.LEFT, window.constant.MapRect.RIGHT);
+      var locationY = getRandomInteger(window.constant.MapRect.TOP, window.constant.MapRect.BOTTON);
 
       adverts.push({
         author: {

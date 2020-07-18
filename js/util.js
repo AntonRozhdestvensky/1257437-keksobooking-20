@@ -23,7 +23,6 @@
 
   window.util = {
     ErrorText: ErrorText,
-    EventKeyCode: EventKeyCode,
     toggleFieldsetState: toggleFieldsetState,
     isEnterKey: isEnterKey,
     isMainMouseButton: isMainMouseButton,
