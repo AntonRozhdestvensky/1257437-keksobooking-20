@@ -12,23 +12,29 @@
       case 'house':
         return 'Дом';
       default:
-      return 'Дворец';
+        return 'Дворец';
     }
   };
 
   var getRoomEnding = function (data) {
-    return (data === 1) ? ' комната': (data >=2 && data <= 4) ? ' комнаты' : ' комнат';
+    if (data === 1) {
+      return ' комната';
+    } else if (data >= 2 && data <= 4) {
+      return ' комнаты';
+    }
+
+    return ' комнат';
   };
 
   var getGuestEnding = function (data) {
-    result (data === 1) ? ' гостя' : ' гостей';
+    return (data === 1) ? ' гостя' : ' гостей';
   };
 
   var getFeatureList = function (data) {
     var featureStringList = '';
 
     for (var i = 0; i < data.length; i++) {
-      featureStringList += '<li class="popup__feature popup__feature--' + data[i] + '"></li>'
+      featureStringList += '<li class="popup__feature popup__feature--' + data[i] + '"></li>';
     }
 
     return featureStringList;
@@ -38,7 +44,7 @@
     var photoStringList = '';
 
     for (var i = 0; i < data.lenght; i++) {
-      photoStringList += '<img src="' + photos[i] + '" class="popup__photo" width="45" height="40" alt="Фотография жилья">';
+      photoStringList += '<img src="' + data[i] + '" class="popup__photo" width="45" height="40" alt="Фотография жилья">';
     }
 
     return photoStringList;

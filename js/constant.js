@@ -1,27 +1,26 @@
 'use strict';
 
 (function () {
-    var MapRect = {
-        LEFT: 0,
-        RIGHT: 1200,
-        TOP: 130,
-        BOTTOM: 630,
-    };
+  var MapRect = {
+    LEFT: 0,
+    RIGHT: 1200,
+    TOP: 130,
+    BOTTOM: 630,
+  };
 
-    var EventKeyCode = {
-        ENTER_KEY: 'Enter',
-        MOUSE_KEY: 0,
-    };
+  var ENTER_KEY = 'Enter';
+  var MOUSE_KEY = 0;
 
-    var MainPinSize = {
-      HEIGHT: 80,
-      RADIUS: Math.floor(65 / 2),
-    };
+  var MainPinSize = {
+    HEIGHT: 80,
+    RADIUS: Math.floor(65 / 2),
+  };
 
-    window.constant = {
-        MapRect: MapRect,
-        EventKeyCode: EventKeyCode,
-        MainPinSize: MainPinSize,
-    };
+  window.constant = {
+    MapRect: MapRect,
+    ENTER_KEY: ENTER_KEY,
+    MOUSE_KEY: MOUSE_KEY,
+    MainPinSize: MainPinSize,
+  };
 
 })();

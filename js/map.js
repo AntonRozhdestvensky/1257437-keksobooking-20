@@ -18,7 +18,6 @@
     pinContainer.appendChild(fragment);
   };
 
-  console.log(window.data.adverts);
   var activatePage = function () {
     addPins(window.data.adverts);
     map.classList.remove('map--faded');

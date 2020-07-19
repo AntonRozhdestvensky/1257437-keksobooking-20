@@ -20,11 +20,11 @@
   };
 
   var isEnterKey = function (evt) {
-    return evt.key === window.constant.EventKeyCode.ENTER_KEY;
+    return evt.key === window.constant.ENTER_KEY;
   };
 
   var isMainMouseButton = function (evt) {
-    return evt.button === window.constant.EventKeyCode.MOUSE_KEY;
+    return evt.button === window.constant.MOUSE_KEY;
   };
 
   window.util = {

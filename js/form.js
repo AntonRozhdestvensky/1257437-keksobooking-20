@@ -30,5 +30,5 @@
 
   window.form = {
     renderAddressInput: renderAddressInput,
-  }
+  };
 })();
