@@ -13,13 +13,13 @@
 
 
   var addressInput = adForm.querySelector('input[name=address]');
-  var fieldsetsAdForm = adForm.querySelectorAll('fieldset');
+
   var roomsNumber = adForm.querySelector('#room_number');
   var capacity = adForm.querySelector('#capacity');
   var adFormSubmit = document.querySelector('.ad-form__submit');
 
 
-  var mapFormSelectOptions = mapFilters.querySelectorAll('select');
+
   var mapFeatures = mapFilters.querySelectorAll('input');
 
   window.htmlSelectors = {

@@ -7,9 +7,15 @@
     NO_VALUE_GUESTS: 'Не выбрано количество гостей',
   };
 
-  var toggleFieldsetState = function (elements, state) {
+  var toggleFieldsetStateOff = function (elements) {
     elements.forEach(function (element) {
-      element.disabled = state;
+      element.disabled = true;
+    });
+  };
+
+  var toggleFieldsetStateOn = function (elements) {
+    elements.forEach(function (element) {
+      element.disabled = false;
     });
   };
 
@@ -23,7 +29,8 @@
 
   window.util = {
     ErrorText: ErrorText,
-    toggleFieldsetState: toggleFieldsetState,
+    toggleFieldsetStateOff: toggleFieldsetStateOff,
+    toggleFieldsetState: toggleFieldsetStateOn,
     isEnterKey: isEnterKey,
     isMainMouseButton: isMainMouseButton,
   };

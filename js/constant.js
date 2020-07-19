@@ -22,6 +22,6 @@
         MapRect: MapRect,
         EventKeyCode: EventKeyCode,
         MainPinSize: MainPinSize,
-    }
+    };
 
 })();

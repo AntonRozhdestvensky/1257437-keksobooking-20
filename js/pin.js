@@ -10,7 +10,7 @@
     pin.style.left = (advert.location.x - window.constant.MainPinSize.RADIUS) + 'px';
     pin.style.top = (advert.location.y - window.constant.MainPinSize.HEIGHT) + 'px';
     image.src = advert.author.avatar;
-    image.alt = advert.offer.titl;
+    image.alt = advert.offer.title;
 
     return pin;
   };
