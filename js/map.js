@@ -1,30 +1,35 @@
 'use strict';
 
 (function () {
-
-  var pinContainer = window.htmlSelectors.map.querySelector('.map__pins');
-  var fieldsetsAdForm = window.htmlSelectors.adForm.querySelectorAll('fieldset');
-  var mapFormSelectOptions = window.htmlSelectors.adForm.mapFilters.querySelectorAll('select');
+  var map = document.querySelector('.map');
+  var adForm = document.querySelector('.ad-form');
+  var mapFilters = document.querySelector('.map__filters'); // Фильтр объявлений
+  var pinContainer = map.querySelector('.map__pins');
+  var fieldsetsAdForm = adForm.querySelectorAll('fieldset');
+  var mapFormSelectOptions = adForm.querySelectorAll('select');
+  var mapFeatures = mapFilters.querySelectorAll('input');
+  var mainPin = map.querySelector('.map__pin--main');
 
   var addPins = function (adverts) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < adverts.length; i++) {
-      fragment.appendChild(windows.pin.rendering(adverts[i]));
+      fragment.appendChild(window.pin.rendering(adverts[i]));
     }
     pinContainer.appendChild(fragment);
   };
 
+  console.log(window.data.adverts);
   var activatePage = function () {
-    addPins(windows.pin.rendering);
-    window.htmlSelectors.map.classList.remove('map--faded');
-    window.htmlSelectors.adForm.classList.remove('ad-form--disabled');
-    window.htmlSelectors.mapFilters.classList.remove('map__filters--disabled');
-    window.util.toggleFieldsetStateOn(window.htmlSelectors.fieldsetsAdForm, false);
-    window.util.toggleFieldsetStateOn(window.htmlSelectors.mapFormSelectOptions, false);
-    window.util.toggleFieldsetStateOn(window.htmlSelectors.mapFeatures, false);
+    addPins(window.data.adverts);
+    map.classList.remove('map--faded');
+    adForm.classList.remove('ad-form--disabled');
+    mapFilters.classList.remove('map__filters--disabled');
+    window.util.toggleFieldsetStateOn(fieldsetsAdForm);
+    window.util.toggleFieldsetStateOn(mapFormSelectOptions);
+    window.util.toggleFieldsetStateOn(mapFeatures);
     window.form.renderAddressInput(true);
-    window.htmlSelectors.mainPin.removeEventListener('mousedown', onMainPinMousedown);
-    window.htmlSelectors.mainPin.removeEventListener('keydown', onMainPinKeydown);
+    mainPin.removeEventListener('mousedown', onMainPinMousedown);
+    mainPin.removeEventListener('keydown', onMainPinKeydown);
   };
 
   var onMainPinKeydown = function (evt) {
@@ -39,11 +44,11 @@
     }
   };
 
-  window.htmlSelectors.mainPin.addEventListener('mousedown', onMainPinMousedown);
-  window.htmlSelectors.mainPin.addEventListener('keydown', onMainPinKeydown);
+  mainPin.addEventListener('mousedown', onMainPinMousedown);
+  mainPin.addEventListener('keydown', onMainPinKeydown);
 
-  window.pin.renderAddressInput(false);
+  window.form.renderAddressInput(false);
   window.util.toggleFieldsetStateOff(fieldsetsAdForm);
   window.util.toggleFieldsetStateOff(mapFormSelectOptions);
-  window.util.toggleFieldsetStateOff(window.htmlSelectors.mapFeatures);
+  window.util.toggleFieldsetStateOff(mapFeatures);
 })();

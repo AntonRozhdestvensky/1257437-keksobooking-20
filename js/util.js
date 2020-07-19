@@ -20,17 +20,17 @@
   };
 
   var isEnterKey = function (evt) {
-    return evt.key === EventKeyCode.ENTER_KEY;
+    return evt.key === window.constant.EventKeyCode.ENTER_KEY;
   };
 
   var isMainMouseButton = function (evt) {
-    return evt.button === MOUSE_KEY;
+    return evt.button === window.constant.EventKeyCode.MOUSE_KEY;
   };
 
   window.util = {
     ErrorText: ErrorText,
     toggleFieldsetStateOff: toggleFieldsetStateOff,
-    toggleFieldsetState: toggleFieldsetStateOn,
+    toggleFieldsetStateOn: toggleFieldsetStateOn,
     isEnterKey: isEnterKey,
     isMainMouseButton: isMainMouseButton,
   };
