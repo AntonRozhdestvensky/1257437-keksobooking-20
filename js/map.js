@@ -13,5 +13,5 @@
 
   window.map = {
     addPins: addPins,
-  }
+  };
 })();

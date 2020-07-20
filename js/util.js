@@ -19,8 +19,6 @@
     }
   };
 
-
-
   var isEnterKey = function (evt) {
     return evt.key === window.constant.ENTER_KEY;
   };
