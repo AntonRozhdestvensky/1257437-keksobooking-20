@@ -8,16 +8,18 @@
   };
 
   var toggleFieldsetStateOff = function (elements) {
-    elements.forEach(function (element) {
-      element.disabled = true;
-    });
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].disabled = true;
+    }
   };
 
   var toggleFieldsetStateOn = function (elements) {
-    elements.forEach(function (element) {
-      element.disabled = false;
-    });
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].disabled = false;
+    }
   };
+
+
 
   var isEnterKey = function (evt) {
     return evt.key === window.constant.ENTER_KEY;
