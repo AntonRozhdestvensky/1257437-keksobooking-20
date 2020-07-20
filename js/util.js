@@ -27,11 +27,16 @@
     return evt.button === window.constant.MOUSE_KEY;
   };
 
+  var isDocumentKeydown = function (evt) {
+    return evt.key === window.constant.ESC_KEY;
+  };
+
   window.util = {
     ErrorText: ErrorText,
     toggleFieldsetStateOff: toggleFieldsetStateOff,
     toggleFieldsetStateOn: toggleFieldsetStateOn,
     isEnterKey: isEnterKey,
     isMainMouseButton: isMainMouseButton,
+    isDocumentKeydown: isDocumentKeydown,
   };
 })();

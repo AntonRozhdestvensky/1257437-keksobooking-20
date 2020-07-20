@@ -12,6 +12,10 @@
     image.src = advert.author.avatar;
     image.alt = advert.offer.title;
 
+    pin.addEventListener('click', function () {
+      window.card.rendering(advert);
+    });
+
     return pin;
   };
 

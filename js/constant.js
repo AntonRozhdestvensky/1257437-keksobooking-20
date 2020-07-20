@@ -9,6 +9,7 @@
   };
 
   var ENTER_KEY = 'Enter';
+  var ESC_KEY = 'Escape';
   var MOUSE_KEY = 0;
 
   var MainPinSize = {
@@ -20,6 +21,7 @@
     MapRect: MapRect,
     ENTER_KEY: ENTER_KEY,
     MOUSE_KEY: MOUSE_KEY,
+    ESC_KEY: ESC_KEY,
     MainPinSize: MainPinSize,
   };
 

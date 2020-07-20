@@ -2,6 +2,8 @@
 
 (function () {
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+  var mapBlock = document.querySelector('.map');
+  var mapFiltersContainer = document.querySelector('.map__filters-container');
 
   var getHousingType = function (type) {
     switch (type) {
@@ -67,8 +69,23 @@
     return cardElement;
   };
 
+  var closeCard = function () {
+    var advertCard = document.querySelector('.map__card');
+    if (advertCard) {
+      advertCard.remove();
+    }
+    document.removeEventListener('click', window.util.isMainMouseButton);
+    document.removeEventListener('keydown', window.util.isDocumentKeydown);
+  };
+
+  var renderCard = function (data) {
+    closeCard();
+    mapBlock.insertBefore(createCard(data), mapFiltersContainer);
+    document.addEventListener('keydown', window.util.isDocumentKeydown);
+  };
+
   window.card = {
-    rendering: createCard,
+    rendering: renderCard,
   };
 
 })();
