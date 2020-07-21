@@ -7,34 +7,30 @@
     NO_VALUE_GUESTS: 'Не выбрано количество гостей',
   };
 
-  var toggleFieldsetStateOff = function (elements) {
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].disabled = true;
-    }
+  var setDisabled = function (element) {
+    element.disabled = true;
   };
 
-  var toggleFieldsetStateOn = function (elements) {
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].disabled = false;
-    }
+  var unsetDisabled = function (element) {
+    element.disabled = false;
   };
 
   var isEnterKey = function (evt) {
-    return evt.key === window.constants.ENTER_KEY;
+    return evt.key === window.constant.ENTER_KEY;
   };
 
   var isMainMouseButton = function (evt) {
-    return evt.button === window.constants.MOUSE_KEY;
+    return evt.button === window.constant.MOUSE_KEY;
   };
 
   var isEscapeKey = function (evt) {
-    return evt.key === window.constants.ESC_KEY;
+    return evt.key === window.constant.ESC_KEY;
   };
 
-  window.utils = {
+  window.util = {
     ErrorText: ErrorText,
-    toggleFieldsetStateOff: toggleFieldsetStateOff,
-    toggleFieldsetStateOn: toggleFieldsetStateOn,
+    setDisabled: setDisabled,
+    unsetDisabled: unsetDisabled,
     isEnterKey: isEnterKey,
     isMainMouseButton: isMainMouseButton,
     isEscapeKey: isEscapeKey,

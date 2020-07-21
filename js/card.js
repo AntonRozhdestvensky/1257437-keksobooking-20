@@ -12,8 +12,8 @@
     'house': 'Дом'
   };
 
-  var getGuestEnding = function (data) {
-    return (data === 1) ? ' гостя' : ' гостей';
+  var getGuestEnding = function (guests) {
+    return (guests === 1) ? ' гостя' : ' гостей';
   };
 
   var getFeature = function (features) {
