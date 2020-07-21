@@ -8,8 +8,8 @@
   var adFormSubmit = document.querySelector('.ad-form__submit');
 
   var renderAddressInput = function (isPageActive) {
-    var x = mainPin.offsetLeft + window.constant.MainPinSize.RADIUS;
-    var y = mainPin.offsetTop + (isPageActive ? window.constant.MainPinSize.HEIGHT : window.constant.MainPinSize.RADIUS);
+    var x = mainPin.offsetLeft + window.constants.MainPinSize.RADIUS;
+    var y = mainPin.offsetTop + (isPageActive ? window.constants.MainPinSize.HEIGHT : window.constants.MainPinSize.RADIUS);
 
     addressInput.value = x + ', ' + y;
   };

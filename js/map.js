@@ -5,9 +5,9 @@
 
   var addPins = function (adverts) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < adverts.length; i++) {
-      fragment.appendChild(window.pin.rendering(adverts[i]));
-    }
+    adverts.forEach(function (advert) {
+      fragment.appendChild(window.pin.render(advert));
+    });
     pinContainer.appendChild(fragment);
   };
 
@@ -15,3 +15,5 @@
     addPins: addPins,
   };
 })();
+
+

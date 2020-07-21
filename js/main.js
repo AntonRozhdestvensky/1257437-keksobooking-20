@@ -14,23 +14,23 @@
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     mapFilters.classList.remove('map__filters--disabled');
-    window.util.toggleFieldsetStateOn(fieldsetsAdForm);
-    window.util.toggleFieldsetStateOn(mapFormSelectOptions);
-    window.util.toggleFieldsetStateOn(mapFeatures);
-    window.util.toggleFieldsetStateOn(mapFilters);
+    window.utils.toggleFieldsetStateOn(fieldsetsAdForm);
+    window.utils.toggleFieldsetStateOn(mapFormSelectOptions);
+    window.utils.toggleFieldsetStateOn(mapFeatures);
+    window.utils.toggleFieldsetStateOn(mapFilters);
     window.form.renderAddressInput(true);
     mainPin.removeEventListener('mousedown', onMainPinMousedown);
     mainPin.removeEventListener('keydown', onMainPinKeydown);
   };
 
   var onMainPinKeydown = function (evt) {
-    if (window.util.isEnterKey(evt)) {
+    if (window.utils.isEnterKey(evt)) {
       activatePage();
     }
   };
 
   var onMainPinMousedown = function (evt) {
-    if (window.util.isMainMouseButton(evt)) {
+    if (window.utils.isMainMouseButton(evt)) {
       activatePage();
     }
   };
@@ -39,8 +39,8 @@
   mainPin.addEventListener('keydown', onMainPinKeydown);
 
   window.form.renderAddressInput(false);
-  window.util.toggleFieldsetStateOff(fieldsetsAdForm);
-  window.util.toggleFieldsetStateOff(mapFormSelectOptions);
-  window.util.toggleFieldsetStateOff(mapFeatures);
-  window.util.toggleFieldsetStateOff(mapFilters);
+  window.utils.toggleFieldsetStateOff(fieldsetsAdForm);
+  window.utils.toggleFieldsetStateOff(mapFormSelectOptions);
+  window.utils.toggleFieldsetStateOff(mapFeatures);
+  window.utils.toggleFieldsetStateOff(mapFilters);
 })();
