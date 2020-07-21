@@ -45,6 +45,9 @@
     var card = cardTemplate.cloneNode(true);
     var offer = advert.offer;
 
+    var popupClose = card.querySelector('.popup__close');
+
+
     card.querySelector('.popup__title').textContent = offer.title;
     card.querySelector('.popup__text--address').textContent = offer.address;
     card.querySelector('.popup__text--price').textContent = offer.price + ' ₽/ночь';
@@ -62,14 +65,17 @@
 
     card.querySelector('.popup__avatar').src = advert.author.avatar;
 
+    popupClose.addEventListener('click', onPopupCloseClick);
+
     return card;
   };
 
   var closeCard = function () {
     var advertCard = document.querySelector('.map__card');
-    advertCard.remove();
-
-    document.removeEventListener('click', onAdvertPinMousedown);
+    if (advertCard) {
+      advertCard.remove();
+    }
+    document.removeEventListener('click', onPopupCloseClick);
     document.removeEventListener('keydown', onEscapeKeydown);
   };
 
@@ -79,8 +85,9 @@
     }
   };
 
-  var onAdvertPinMousedown = function (evt) {
+  var onPopupCloseClick = function (evt) {
     if (window.utils.isMainMouseButton(evt)) {
+      evt.preventDefault();
       closeCard();
     }
   };
