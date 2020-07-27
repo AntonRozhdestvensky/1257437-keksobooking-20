@@ -16,18 +16,18 @@
   };
 
   var isEnterKey = function (evt) {
-    return evt.key === window.constant.ENTER_KEY;
+    return evt.key === window.constants.ENTER_KEY;
   };
 
   var isMainMouseButton = function (evt) {
-    return evt.button === window.constant.MOUSE_KEY;
+    return evt.button === window.constants.MOUSE_KEY;
   };
 
   var isEscapeKey = function (evt) {
-    return evt.key === window.constant.ESC_KEY;
+    return evt.key === window.constants.ESC_KEY;
   };
 
-  window.util = {
+  window.utils = {
     ErrorText: ErrorText,
     setDisabled: setDisabled,
     unsetDisabled: unsetDisabled,

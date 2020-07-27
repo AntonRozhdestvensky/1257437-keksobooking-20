@@ -10,7 +10,6 @@
     window.map.addPins(window.data.adverts);
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
-    mapFilters.classList.remove('map__filters--disabled');
     fieldsetsAdForm.forEach(window.utils.unsetDisabled);
     mapFilters.forEach(window.utils.unsetDisabled);
     window.form.renderAddressInput(true);

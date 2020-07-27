@@ -5,11 +5,11 @@
   var mapBlock = document.querySelector('.map');
   var mapFiltersContainer = document.querySelector('.map__filters-container');
 
-  var HOUSING_TYPE = {
-    'palace': 'Дворец',
-    'flat': 'Квартира',
-    'bungalo': 'Бунгало',
-    'house': 'Дом'
+  var HousingType = {
+    PALACE: 'Дворец',
+    FLAT: 'Квартира',
+    BUNGALO: 'Бунгало',
+    HOUSE: 'Дом',
   };
 
   var getGuestEnding = function (guests) {
@@ -21,8 +21,7 @@
 
     for (var i = 0; i < features.length; i++) {
       var creatList = document.createElement('li');
-      creatList.classList.add('popup__feature');
-      creatList.classList.add('popup__feature--' + features[i]);
+      creatList.classList.add('popup__feature', 'popup__feature--' + features[i]);
       fragment.appendChild(creatList);
     }
 
@@ -31,15 +30,16 @@
 
   var getPhoto = function (photos) {
     var fragment = document.createDocumentFragment();
-
+    var clonePhoto = cardTemplate.querySelector('.popup__photo').cloneNode();
     for (var i = 0; i < photos.length; i++) {
-      var clonePhoto = cardTemplate.querySelector('.popup__photo').cloneNode();
       clonePhoto.src = photos[i];
       fragment.appendChild(clonePhoto);
     }
 
     return fragment;
   };
+
+
 
   var createCard = function (advert) {
     var card = cardTemplate.cloneNode(true);
@@ -51,7 +51,7 @@
     card.querySelector('.popup__title').textContent = offer.title;
     card.querySelector('.popup__text--address').textContent = offer.address;
     card.querySelector('.popup__text--price').textContent = offer.price + ' ₽/ночь';
-    card.querySelector('.popup__type').textContent = HOUSING_TYPE[advert.offer.type];
+    card.querySelector('.popup__type').textContent = HousingType[advert.offer.type];
     card.querySelector('.popup__text--capacity').textContent = offer.rooms + ' комнаты для ' + ' для ' + offer.guests + getGuestEnding(offer.guests);
     card.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.checkin + ', выезд до ' + offer.checkout;
 
@@ -72,7 +72,7 @@
 
   var closeCard = function () {
     var advertCard = document.querySelector('.map__card');
-    if (advertCard) {
+    if (advertCard !== null) {
       advertCard.remove();
     }
     document.removeEventListener('click', onPopupCloseClick);
@@ -87,7 +87,6 @@
 
   var onPopupCloseClick = function (evt) {
     if (window.utils.isMainMouseButton(evt)) {
-      evt.preventDefault();
       closeCard();
     }
   };
