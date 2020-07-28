@@ -18,28 +18,23 @@
 
   var getFeature = function (features) {
     var fragment = document.createDocumentFragment();
-
-    for (var i = 0; i < features.length; i++) {
-      var creatList = document.createElement('li');
-      creatList.classList.add('popup__feature', 'popup__feature--' + features[i]);
-      fragment.appendChild(creatList);
-    }
-
+    features.forEach(function (feature) {
+      var featureList = document.createElement('li');
+      featureList.classList = 'popup__feature popup__feature--' + feature;
+      fragment.appendChild(featureList);
+    });
     return fragment;
-  };
+  }
 
   var getPhoto = function (photos) {
     var fragment = document.createDocumentFragment();
-    var clonePhoto = cardTemplate.querySelector('.popup__photo').cloneNode();
-    for (var i = 0; i < photos.length; i++) {
-      clonePhoto.src = photos[i];
+    photos.forEach(function (photo) {
+      var clonePhoto = cardTemplate.querySelector('.popup__photo').cloneNode();
+      clonePhoto.src = photo;
       fragment.appendChild(clonePhoto);
-    }
-
+    });
     return fragment;
-  };
-
-
+  }
 
   var createCard = function (advert) {
     var card = cardTemplate.cloneNode(true);
