@@ -2,6 +2,7 @@
 
 (function () {
   var ADVERT_COUNT = 8;
+  var MIN_FEATURES = 2;
   var TITLES = [
     'Заголовок - 1',
     'Заголовок - 2',
@@ -36,7 +37,16 @@
   ];
 
   var getRandomElementArray = function (array) {
-    return Math.floor(Math.random() * array.length);
+    return array[Math.floor(Math.random() * array.length)];
+  };
+
+  var getRandomArray = function (array, length) {
+    length = length ? length : array.length;
+    var randomArray = array.slice();
+    randomArray.sort(function () {
+      return Math.random() - 0.5;
+    });
+    return randomArray.slice(0, length);
   };
 
   var getRandomInteger = function (min, max) {
@@ -64,9 +74,9 @@
           guests: getRandomElementArray(GUESTS),
           checkin: getRandomElementArray(CHECK_TIMES),
           checkout: getRandomElementArray(CHECK_TIMES),
-          features: getRandomElementArray(FEATURES),
+          features: getRandomArray(FEATURES, getRandomInteger(MIN_FEATURES, FEATURES.length)),
           description: getRandomElementArray(DESCRIPTIONS),
-          photos: getRandomElementArray(PHOTOS),
+          photos: getRandomArray(PHOTOS),
         },
         location: {
           x: locationX,
