@@ -4,12 +4,13 @@
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
   var mapBlock = document.querySelector('.map');
   var mapFiltersContainer = document.querySelector('.map__filters-container');
+  var clonePhoto = cardTemplate.querySelector('.popup__photo').cloneNode();
 
   var HousingType = {
-    PALACE: 'Дворец',
-    FLAT: 'Квартира',
-    BUNGALO: 'Бунгало',
-    HOUSE: 'Дом',
+    flat: 'Квартира',
+    bungalo: 'Бунгало',
+    house: 'Дом',
+    palace: 'Дворец',
   };
 
   var getGuestEnding = function (guests) {
@@ -20,7 +21,7 @@
     var fragment = document.createDocumentFragment();
     features.forEach(function (feature) {
       var featureList = document.createElement('li');
-      featureList.classList = 'popup__feature popup__feature--' + feature;
+      featureList.classList.add('popup__feature', 'popup__feature--' + feature);
       fragment.appendChild(featureList);
     });
     return fragment;
@@ -29,7 +30,6 @@
   var getPhoto = function (photos) {
     var fragment = document.createDocumentFragment();
     photos.forEach(function (photo) {
-      var clonePhoto = cardTemplate.querySelector('.popup__photo').cloneNode();
       clonePhoto.src = photo;
       fragment.appendChild(clonePhoto);
     });
@@ -39,7 +39,6 @@
   var createCard = function (advert) {
     var card = cardTemplate.cloneNode(true);
     var offer = advert.offer;
-
     var popupClose = card.querySelector('.popup__close');
 
 
