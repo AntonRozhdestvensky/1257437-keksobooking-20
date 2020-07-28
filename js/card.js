@@ -25,7 +25,7 @@
       fragment.appendChild(featureList);
     });
     return fragment;
-  }
+  };
 
   var getPhoto = function (photos) {
     var fragment = document.createDocumentFragment();
@@ -34,7 +34,7 @@
       fragment.appendChild(clonePhoto);
     });
     return fragment;
-  }
+  };
 
   var createCard = function (advert) {
     var card = cardTemplate.cloneNode(true);
